@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Login</h2>
+                <p>Choose one of the login options available</p>
+                <form class="mt-3" action="{{ url_for('login_facebook') }}" method="post">
+                    <button href="" class="btn btn-social btn-facebook">
+                        <span class="fa fa-facebook"></span>
+                        Sign in with Facebook
+                    </button>
+                </form>
+                <form class="mt-3" action="{{ url_for('login_google') }}" method="post">
+                    <button class="btn btn-social btn-google">
+                        <span class="fa fa-google"></span>
+                        Sign in with Google
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
