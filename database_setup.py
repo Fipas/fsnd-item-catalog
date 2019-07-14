@@ -14,6 +14,7 @@ class User(Base):
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
+    @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
@@ -29,6 +30,14 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'name': self.name
+        }
 
 
 class Game(Base):
