@@ -147,7 +147,7 @@ def facebook_logout():
     url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
     requests.delete(url)
     del facebook_bp.token
-    
+
 
 def google_logout():
     token = google_bp.token["access_token"]
