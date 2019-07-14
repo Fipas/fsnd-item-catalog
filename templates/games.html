@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            <a href="/games">
+                Game catalog
+            </a>
+        </li>
+        {% for category in categories %}
+            <li>
+                <a href="{{ url_for('show_games_by_category', category_id=category.id)}}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+ <div id="page-content-wrapper">
+     <div class="container-fluid">
+         <div class="row">
+             <div class="col-lg-12">
+                 <button type="button" class="btn btn-secondary mb-3">Add new game</button>
+                 {% if chosen_category %}
+                    <h2>Listing all {{ chosen_category.name }} games</h2>
+                 {% else %}
+                    <h2>Latest games added</h2>
+                 {% endif %}
+                 {% for game in games %}
+                    <div class="card mt-3 mb-3" style="width: 30rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ game.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ game.category.name}}</h6>
+                            <p class="card-text">{{ game.description }}</p>
+                            <a href="#" class="card-link">Edit</a>
+                            <a href="#" class="card-link">Delete</a>
+                        </div>
+                    </div>
+                {% endfor %}
+             </div>
+         </div>
+     </div>
+</div>
+{% endblock %}
