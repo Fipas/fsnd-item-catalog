@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+from flask_toastr import Toastr
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Game, User
 from flask import session as login_session
 
 app = Flask(__name__)
+toastr = Toastr(app)
 
 # Connect to Database and create database session
 engine = create_engine('sqlite:///gamecatalog.db', connect_args={'check_same_thread': False})
@@ -37,16 +39,43 @@ def add_game():
                     user_id=1)
         session.add(game)
         session.commit()
-        flash("New game added!")
+        flash("New game added!", 'success')
         return redirect(url_for('show_all_games'))
 
 @app.route('/games/update/<int:game_id>', methods=['GET', 'POST'])
 def update_game(game_id):
-    pass
+    game = session.query(Game).filter_by(id=game_id).one()
+
+    if request.method == 'GET':
+        return render_template('update_game.html', game=game)
+
+    if request.method == 'POST':
+        if request.form['name']:
+            game.name = request.form['name']
+        if request.form['description']:
+            game.description = request.form['description']
+        if request.form['category']:
+            game.category_id = request.form['category']
+        session.add(game)
+        session.commit()
+        flash('Game successfully updated!', 'success')
+        return redirect(url_for('show_all_games'))
+
+
+
 
 @app.route('/games/delete/<int:game_id>', methods=['GET', 'POST'])
 def delete_game(game_id):
-    pass
+    game = session.query(Game).filter_by(id=game_id).one()
+
+    if request.method == 'GET':
+        return render_template('delete_game.html', game=game)
+
+    if request.method == 'POST':
+        session.delete(game)
+        session.commit()
+        flash('Game successfully deleted!', 'success')
+        return redirect(url_for('show_all_games'))
 
 @app.route('/games/category/<int:category_id>/')
 def show_games_by_category(category_id):

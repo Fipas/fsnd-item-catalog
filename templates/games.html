@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+
  <div id="page-content-wrapper">
      <div class="container-fluid">
          <div class="row">
              <div class="col-lg-12">
-                 <a role="button" class="btn btn-secondary mb-3" href="{{ url_for('add_game') }}">Add new game</a>
+                 <a role="button" class="btn btn-primary mb-3" href="{{ url_for('add_game') }}">Add new game</a>
                  {% if chosen_category %}
                     <h2>Listing all {{ chosen_category.name }} games</h2>
                  {% else %}
@@ -16,8 +17,8 @@
                             <h5 class="card-title">{{ game.name }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ game.category.name}}</h6>
                             <p class="card-text">{{ game.description }}</p>
-                            <a href="#" class="card-link">Edit</a>
-                            <a href="#" class="card-link">Delete</a>
+                            <a href="{{ url_for('update_game', game_id=game.id) }}" class="card-link">Update</a>
+                            <a href="{{ url_for('delete_game', game_id=game.id) }}" class="card-link">Delete</a>
                         </div>
                     </div>
                 {% endfor %}
