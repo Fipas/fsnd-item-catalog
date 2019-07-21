@@ -14,10 +14,11 @@ import requests
 import json
 
 app = Flask(__name__)
+app.secret_key = 'super_secret_key'
 toastr = Toastr(app)
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///gamecatalog.db', connect_args={'check_same_thread': False})
+engine = create_engine('postgresql+psycopg2://catalog_admin:catalog_admin_password@localhost/catalog_db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()

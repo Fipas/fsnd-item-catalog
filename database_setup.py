@@ -45,7 +45,7 @@ class Game(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False)
-    description = Column(String(250))
+    description = Column(String(800))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -61,5 +61,5 @@ class Game(Base):
         }
 
 
-engine = create_engine('sqlite:///gamecatalog.db')
+engine = create_engine('postgresql+psycopg2://catalog_admin:catalog_admin_password@localhost/catalog_db')
 Base.metadata.create_all(engine)
